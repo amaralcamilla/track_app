@@ -1,16 +1,12 @@
 import React, {useContext} from 'react';
-import {View, StyleSheet} from "react-native";
-import {Context as AuthContext} from "../context/AuthContext";
-import AuthForm from "../components/AuthForm";
-import NavLink from "../components/NavLink";
-import {NavigationEvents} from "react-navigation";
+import {View, StyleSheet} from 'react-native';
+import {NavigationEvents} from 'react-navigation';
+import {Context as AuthContext} from '../context/AuthContext';
+import AuthForm from '../components/AuthForm';
+import NavLink from '../components/NavLink';
 
 const SignupScreen = ({navigation}) => {
     const {state, signup, clearErrorMessage} = useContext(AuthContext);
-
-    // onSubmit={({email, password}) => signup({email, password})}
-    // is the same as...
-    // onSubmit={signup}
 
     return (
         <View style={styles.container}>
@@ -28,12 +24,12 @@ const SignupScreen = ({navigation}) => {
                 text='Already have an account? Sign in instead!'
             />
         </View>
-    )
-}
+    );
+};
 
 SignupScreen.navigationOptions = () => {
     return {
-        headerShown: false,
+        header: () => false,
     };
 };
 
@@ -41,7 +37,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        marginBottom: 220,
+        marginBottom: 250,
     },
 });
 
