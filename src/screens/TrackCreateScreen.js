@@ -1,3 +1,4 @@
+import '../_mockLocation';
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, SafeAreaView} from "react-native";
 import {Text} from 'react-native-elements';
@@ -18,8 +19,8 @@ const TrackCreateScreen = () => {
         }
     };
 
-    useEffect(() => {
-        startWatching();
+    useEffect(async () => {
+        await startWatching();
     }, []);
 
     return (
