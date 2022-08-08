@@ -1,7 +1,7 @@
-import createDataContext from "./createDataContext";
+import {AsyncStorage} from 'react-native';
+import createDataContext from './createDataContext';
 import trackerApi from '../api/tracker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {navigate} from "../navigationRef";
+import {navigate} from '../navigationRef';
 
 const authReducer = (state, action) => {
     switch (action.type) {
@@ -17,6 +17,7 @@ const authReducer = (state, action) => {
             return state;
     }
 };
+
 const tryLocalSignin = dispatch => async () => {
     const token = await AsyncStorage.getItem('token');
     if (token) {
@@ -25,23 +26,19 @@ const tryLocalSignin = dispatch => async () => {
     } else {
         navigate('Signup');
     }
-}
+};
 
 const clearErrorMessage = dispatch => () => {
-    dispatch({type: 'clear_error_message'})
-}
+    dispatch({type: 'clear_error_message'});
+};
 
 const signup = dispatch => async ({email, password}) => {
     try {
-        // 1) make a request
-        const response = await trackerApi.post('/signup', {email, password})
-        // 2) store the token
+        const response = await trackerApi.post('/signup', {email, password});
         await AsyncStorage.setItem('token', response.data.token);
-        // 3) update our state
-        dispatch({type: 'signin', payload: response.data.token})
-        // 4) navigate to the main flow
-        navigate('TrackList');
+        dispatch({type: 'signin', payload: response.data.token});
 
+        navigate('TrackList');
     } catch (err) {
         dispatch({type: 'add_error', payload: 'Something went wrong with sign up.'})
     }
@@ -56,7 +53,7 @@ const signin = dispatch => async ({email, password}) => {
     } catch (err) {
         dispatch({type: 'add_error', payload: 'Something went wrong with sign in.'})
     }
-}
+};
 
 const signout = dispatch => async () => {
     await AsyncStorage.removeItem('token');
